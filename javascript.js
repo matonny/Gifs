@@ -1,12 +1,8 @@
 (function () {
-    onLoad();
-    function onLoad(){
-        addInputListener();
-    }
-    getGifs('pancake');
     function getGifs(tag){
-        var xhr = $.get(`https://api.giphy.com/v1/gifs/search?q=${tag}&api_key=31adb81768b14e8e9f1a04d84dfbcab8&limit=5`);
+        var xhr = $.get(`https://api.giphy.com/v1/gifs/search?q=${tag}&api_key=31adb81768b14e8e9f1a04d84dfbcab8&limit=0`);
         xhr.done(function(data) { console.log("success got data", data);
+            clearPreviousGifs();
             showGifs(data.data); 
         });
     }
@@ -26,8 +22,24 @@
         gifsList = document.querySelector('.gifs__list');
         gifsList.appendChild(gifToDisplay);
     }
-    function addInputListener(){
+    var delay = (function(){
+        var timer = 0;
+        return function(callback, ms){
+          clearTimeout (timer);
+          timer = setTimeout(callback, ms);
+        };
+      })();
+      $('.gifs__tag').keyup(function() {
+        delay(getGifs(getInputValue(), 200));
+    });
+    function getInputValue(){
         let input = document.querySelector('.gifs__tag');
-        input.addEventListener 
+        return String(input.value);
+    }
+    function clearPreviousGifs(){
+       gifsList = document.querySelector('.gifs__list');
+       while (gifsList.firstChild) {
+        gifsList.removeChild(gifsList.firstChild);
+    } 
     }
 })();
