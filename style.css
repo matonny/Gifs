@@ -1,0 +1,15 @@
+.gifs{
+    width:100vw;
+}
+.gifs__title{
+    text-transform: uppercase;
+    color: #444;
+    font-weight: bold;
+    font-family: 'arial', sans-serif;
+    text-align: center;
+}
+.gifs__tag{
+    width:80vw;
+    margin:0 auto; 
+    border-color: 1px solid #444;
+}
